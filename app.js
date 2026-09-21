@@ -34,12 +34,12 @@ function render(s) {
   const banner = $("startBanner");
   const pendingNow = (s.portfolio && s.portfolio.pending_count) || 0;
   if (banner) {
-    if (pendingNow || sess.code !== "REGULAR") {
+    if (!sess.can_trade) {
       banner.className = "banner";
-      banner.innerHTML = "<b>此刻不可買賣。</b> 模擬投資的真正開始是 2026 年 9 月 21 日（星期一）美東 09:30 正規盤開市（香港 21:30）。開市前現金仍為 1,000,000 美元，五筆買入只是待成交委託，不是持倉。";
+      banner.innerHTML = "<b>此刻不可買賣。</b> 只可在美東正規盤（09:30–16:00）按即時公開價模擬成交。盤前、盤後、夜盤一律不得買賣。真正開始是 2026 年 9 月 21 日開市之後。現金仍為 1,000,000 美元，下列只是待成交委託。";
     } else {
       banner.className = "banner live";
-      banner.innerHTML = "<b>正規盤進行中。</b> 待成交委託將按當時公開價模擬成交；跳空超過 2% 則暫停該標的。";
+      banner.innerHTML = "<b>正規盤進行中。</b> 只按即時公開價成交，不用隔夜價。盤前盤後仍然不得新開倉。跳空超過 2% 則暫停該標的。";
     }
   }
 
@@ -314,6 +314,8 @@ function clientSession() {
     twenty_three_live: false,
     next_open_hint: "下一個正規盤：星期一 美東 09:30（香港 21:30）",
     night_new_positions: false,
+    can_trade: code === "REGULAR" && nyStr.slice(0, 10) >= "2026-09-21",
+    trade_rule: "只可在美東正規盤按即時公開價模擬成交。盤前、盤後、夜盤不得買賣。",
   };
 }
 
