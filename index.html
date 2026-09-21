@@ -67,7 +67,7 @@
 
         <h3>為何不是單一看法</h3>
         <p>美股「Magnificent 7」（MAG7）是 Apple、Microsoft、NVIDIA、Amazon、Alphabet、Meta、Tesla。這七家佔標普 500 約三分之一。只聽人工智能故事，容易追高；只聽估值，又可能錯過有現金流的公司。因此一開始便設定：不要一個人扮成全部專家，而要用多個互不抄襲的視角。</p>
-        <p>期限是 6 至 12 個月。風格是核心長持。風險偏好是：寧願錯過機會，也不要大幅回撤。目標是賺錢，但不是為了入場而入場，更不是夜盤追價。</p>
+        <p>期限是 6 至 12 個月。風格是核心長持。風險偏好是：寧願錯過機會，也不要大幅回撤。目標是賺錢，但不是為了入場而入場，更不是夜盤追價。之後若要問單一股票，用「問委員會」：系統會再讀報價與新聞，請十一席發言，由主席回答值不值得買或賣。</p>
 
         <h3>十一個席位</h3>
         <p>常設八席，再加三席處理新聞、夜盤，以及 VOO 與主動倉的重複暴露。各人姓名與職責見「專家」一頁。概要如下：</p>
@@ -112,6 +112,11 @@
       </div>
       <div class="chat" id="chatBox">
         <div class="chat-log" id="chatLog"></div>
+        <div class="chat-hints" id="chatHints">
+          <button type="button" data-q="NVDA 現在值不值得買？">NVDA 值不值得買</button>
+          <button type="button" data-q="該不該賣 AAPL？">該不該賣 AAPL</button>
+          <button type="button" data-q="VOO 還要不要加倉？">VOO 還要不要加倉</button>
+        </div>
         <form class="chat-form" id="chatForm">
           <input id="chatInput" maxlength="300" autocomplete="off" placeholder="例如：現在值不值得買 NVDA？" />
           <button type="submit" id="chatSend">送出</button>

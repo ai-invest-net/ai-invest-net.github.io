@@ -409,6 +409,19 @@ td.num, th.num { text-align: right; }
 .chat-views { margin-top: 10px; }
 .chat-views details { margin: 0 0 6px; }
 .chat-views summary { cursor: pointer; font-size: 13px; }
+.chat-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 12px 8px;
+}
+.chat-hints button {
+  background: transparent;
+  color: var(--gold-2);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  font-size: 12px;
+}
 .chat-form {
   display: flex;
   gap: 8px;

@@ -417,6 +417,30 @@ async function sendQuestion(question) {
     input.value = "";
     sendQuestion(q);
   });
-  appendChat(`<div class="bubble bot"><div class="who">委員會</div>可以問「NVDA 現在值不值得買」「該不該賣 AAPL」。會讀報價與新聞，再請十一席發言。非正規盤即使看多也不得成交。</div>`);
+  const hints = $("chatHints");
+  if (hints) {
+    hints.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-q]");
+      if (!b) return;
+      sendQuestion(b.getAttribute("data-q"));
+    });
+  }
+  fetch("/api/chat", { cache: "no-store" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => {
+      const msgs = (d && d.messages) || [];
+      if (!msgs.length) {
+        appendChat(`<div class="bubble bot"><div class="who">委員會</div>可以問「NVDA 現在值不值得買」「該不該賣 AAPL」。會讀報價與新聞，再請十一席發言。非正規盤即使看多也不得成交。</div>`);
+        return;
+      }
+      msgs.forEach((m) => {
+        appendChat(`<div class="bubble user"><div class="who">你</div>${esc(m.question || "")}</div>`);
+        appendChat(`<div class="bubble bot"><div class="who">委員會紀錄</div><div class="verdict">${esc(m.action || "")}</div><p>${esc(m.summary || "")}</p></div>`);
+      });
+    })
+    .catch(() => {
+      appendChat(`<div class="bubble bot"><div class="who">委員會</div>可以問「NVDA 現在值不值得買」。即時十一席答問請用本機 http://127.0.0.1:8790/</div>`);
+    });
 })();
+
 
