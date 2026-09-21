@@ -29,9 +29,9 @@
 
   <nav class="tabs" id="tabs">
     <button class="tab on" data-page="overview">總覽</button>
+    <button class="tab" data-page="ask">問委員會</button>
     <button class="tab" data-page="concept">概念</button>
     <button class="tab" data-page="experts">專家</button>
-    <button class="tab" data-page="ask">問委員會</button>
     <button class="tab" data-page="trades">買賣紀錄</button>
     <button class="tab" data-page="debate">委員會盤問</button>
     <button class="tab" data-page="look">透視倉位</button>
@@ -54,6 +54,14 @@
         </div>
       </div>
       <div class="grid-3" style="margin-top:18px" id="scenarioBox"></div>
+      <div class="card paper ask-strip" style="margin-top:18px">
+        <h2>問委員會</h2>
+        <p class="tiny">輸入代號即可，例如 VOO。系統會讀即時報價、新聞台與頭條，請十一席發言，回答現價值不值得買或賣。</p>
+        <form class="chat-form" id="askStripForm">
+          <input id="askStripInput" maxlength="300" autocomplete="off" placeholder="VOO" />
+          <button type="submit">問</button>
+        </form>
+      </div>
       <div class="card paper" style="margin-top:18px">
         <h2>這是什麼</h2>
         <p class="tiny" style="margin:0">本站用十一個不同領域的視角互相質詢，再對 VOO 與 MAG7 做模擬投資。完整方法見「概念」，名單與職責見「專家」。這不是投資建議，亦不會在券商代為落單。</p>
@@ -108,17 +116,17 @@
     <section class="page" id="page-ask">
       <div class="card paper" style="margin-bottom:14px">
         <h2>問委員會</h2>
-        <p class="tiny" style="margin:0">輸入一隻股票（例如 NVDA、AAPL、VOO）。系統會先讀即時公開報價、新聞台與 Yahoo 頭條，再請十一席各自發言，最後由風險主席收斂：值不值得買或賣。盤前、盤後、夜盤即使看多也不得成交。此為模擬討論，並非投資建議。</p>
+        <p class="tiny" style="margin:0">輸入代號即可，例如 VOO、NVDA、AAPL。系統會讀即時公開報價、新聞台與 Yahoo 頭條，請十一席各自發言，再由主席回答：現價值不值得買或賣。投資結論與能否成交分開寫。盤前、盤後、夜盤即使看多也不得成交。此為模擬討論，並非投資建議。</p>
       </div>
       <div class="chat" id="chatBox">
         <div class="chat-log" id="chatLog"></div>
         <div class="chat-hints" id="chatHints">
-          <button type="button" data-q="NVDA 現在值不值得買？">NVDA 值不值得買</button>
-          <button type="button" data-q="該不該賣 AAPL？">該不該賣 AAPL</button>
-          <button type="button" data-q="VOO 還要不要加倉？">VOO 還要不要加倉</button>
+          <button type="button" data-q="VOO">VOO</button>
+          <button type="button" data-q="NVDA">NVDA</button>
+          <button type="button" data-q="AAPL">AAPL</button>
         </div>
         <form class="chat-form" id="chatForm">
-          <input id="chatInput" maxlength="300" autocomplete="off" placeholder="例如：現在值不值得買 NVDA？" />
+          <input id="chatInput" maxlength="300" autocomplete="off" placeholder="輸入代號，例如 VOO" />
           <button type="submit" id="chatSend">送出</button>
         </form>
       </div>

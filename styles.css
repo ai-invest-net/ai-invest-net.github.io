@@ -229,6 +229,15 @@ td.num, th.num { text-align: right; }
 .tick .row1 { display: flex; justify-content: space-between; align-items: baseline; }
 .tick .px { font-family: var(--mono); font-size: 20px; }
 .tick .meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
+.sess-tag {
+  display: inline-block;
+  padding: 0 6px;
+  margin-right: 4px;
+  border: 1px solid var(--line);
+  color: var(--warn);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
 
 .paper {
   background: var(--paper);
@@ -373,15 +382,15 @@ td.num, th.num { text-align: right; }
 .chat {
   background: var(--panel);
   border: 1px solid var(--line);
-  min-height: 420px;
+  height: min(72vh, 760px);
   display: flex;
   flex-direction: column;
 }
 .chat-log {
   flex: 1;
   padding: 16px;
-  max-height: 560px;
   overflow: auto;
+  min-height: 0;
 }
 .bubble {
   margin: 0 0 14px;
@@ -413,7 +422,10 @@ td.num, th.num { text-align: right; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 0 12px 8px;
+  padding: 8px 12px;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
 }
 .chat-hints button {
   background: transparent;
@@ -444,6 +456,39 @@ td.num, th.num { text-align: right; }
   font-weight: 600;
 }
 .chat-form button:disabled { opacity: 0.5; }
+
+.ask-strip .chat-form { padding: 0; border: 0; margin-top: 10px; }
+.ask-strip .chat-form input {
+  background: #fff;
+  color: var(--ink);
+  border-color: #d9d0c2;
+}
+.exec-note {
+  margin: 8px 0 10px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--warn);
+  background: rgba(212, 161, 90, 0.12);
+  font-size: 13px;
+}
+.chat-news { margin: 8px 0 0; padding-left: 1.2em; font-size: 13px; line-height: 1.55; }
+.chat-experts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+.chat-expert {
+  background: #f7f1e6;
+  border: 1px solid #e4d9c8;
+  padding: 10px 12px;
+}
+.chat-expert .who { font-size: 13px; color: #7a4a2b; margin: 0 0 4px; }
+.chat-expert p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+.chat-challenges { margin-top: 12px; }
+.chat-challenges .qa { margin: 0 0 8px; font-size: 13.5px; }
+@media (max-width: 720px) {
+  .chat-experts { grid-template-columns: 1fr; }
+}
 
 .foot {
   padding: 8px 28px 28px;
