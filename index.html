@@ -31,6 +31,7 @@
     <button class="tab on" data-page="overview">總覽</button>
     <button class="tab" data-page="concept">概念</button>
     <button class="tab" data-page="experts">專家</button>
+    <button class="tab" data-page="ask">問委員會</button>
     <button class="tab" data-page="trades">買賣紀錄</button>
     <button class="tab" data-page="debate">委員會盤問</button>
     <button class="tab" data-page="look">透視倉位</button>
@@ -102,6 +103,20 @@
         <p>這不是券商戶口，不會代人落單。不是保證賺錢。不是 24 小時自動炒賣。監察可以 round-the-clock，交易仍然節制。公開放上網，是為了讓人看見：多視角互相質詢、現價共識、透視倉位、以及「寧願錯過」如何寫成可執行的規則。</p>
         <p>分數線是同一百萬全數投入 VOO。若超配 MAG7 既跑不贏 VOO，回撤又明顯更大，就不應該超配。</p>
       </article>
+    </section>
+
+    <section class="page" id="page-ask">
+      <div class="card paper" style="margin-bottom:14px">
+        <h2>問委員會</h2>
+        <p class="tiny" style="margin:0">輸入一隻股票（例如 NVDA、AAPL、VOO）。系統會先讀即時公開報價、新聞台與 Yahoo 頭條，再請十一席各自發言，最後由風險主席收斂：值不值得買或賣。盤前、盤後、夜盤即使看多也不得成交。此為模擬討論，並非投資建議。</p>
+      </div>
+      <div class="chat" id="chatBox">
+        <div class="chat-log" id="chatLog"></div>
+        <form class="chat-form" id="chatForm">
+          <input id="chatInput" maxlength="300" autocomplete="off" placeholder="例如：現在值不值得買 NVDA？" />
+          <button type="submit" id="chatSend">送出</button>
+        </form>
+      </div>
     </section>
 
     <section class="page" id="page-experts">

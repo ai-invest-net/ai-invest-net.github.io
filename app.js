@@ -340,3 +340,83 @@ async function boot() {
 }
 boot();
 setInterval(boot, 30000);
+
+function appendChat(html) {
+  const log = $("chatLog");
+  if (!log) return;
+  const d = document.createElement("div");
+  d.innerHTML = html;
+  while (d.firstChild) log.appendChild(d.firstChild);
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderAskResult(question, r) {
+  const chair = r.chair || {};
+  const quote = r.quote || {};
+  const views = r.views || [];
+  const news = r.headlines || [];
+  const viewHtml = views.length
+    ? `<div class="chat-views">${views.map((v) =>
+        `<details><summary>${esc(v.name || "")} · ${esc(v.seat || "")} · ${esc(v.stance || "")}</summary><p>${esc(v.text || "")}</p></details>`
+      ).join("")}</div>`
+    : "";
+  const newsHtml = news.length
+    ? `<p class="tiny">已讀新聞：${news.slice(0, 4).map((n) => esc(n.title || "")).join("；")}</p>`
+    : "";
+  appendChat(`<div class="bubble user"><div class="who">你</div>${esc(question)}</div>`);
+  appendChat(`<div class="bubble bot">
+    <div class="who">委員會 · ${esc(r.engine || "十一席")}</div>
+    <div class="verdict">${esc(chair.action || r.summary || "")}</div>
+    <p>${esc(r.summary || chair.summary || "")}</p>
+    <p class="tiny">${esc(quote.symbol || "")} 現價 ${quote.price != null ? fmt(quote.price) : "—"} · 時段 ${esc(quote.quote_session || quote.status || "")} · ${esc(quote.asof_label || "")}</p>
+    ${newsHtml}
+    ${viewHtml}
+    <p class="tiny">${esc(r.disclaimer || "")}</p>
+  </div>`);
+}
+
+async function sendQuestion(question) {
+  const btn = $("chatSend");
+  const input = $("chatInput");
+  if (btn) btn.disabled = true;
+  appendChat(`<div class="bubble bot" id="chatWait"><div class="who">委員會</div>十一席正在讀即時報價、新聞台與頭條，隨後互相質詢……</div>`);
+  try {
+    let res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    });
+    if (!res.ok) throw new Error("http " + res.status);
+    const r = await res.json();
+    const wait = document.getElementById("chatWait");
+    if (wait) wait.remove();
+    if (!r.ok && r.error) {
+      appendChat(`<div class="bubble bot"><div class="who">委員會</div>${esc(r.error)}</div>`);
+    } else {
+      renderAskResult(question, r);
+    }
+  } catch (err) {
+    const wait = document.getElementById("chatWait");
+    if (wait) wait.remove();
+    appendChat(`<div class="bubble bot"><div class="who">委員會</div>未能連到本機委員會引擎。請用 <code>http://127.0.0.1:8790/</code> 打開本站再問。公開網頁只能展示紀錄，即時十一席答問需要本機儀表板。${esc(String(err))}</div>`);
+  } finally {
+    if (btn) btn.disabled = false;
+    if (input) input.focus();
+  }
+}
+
+(function wireChat() {
+  const form = $("chatForm");
+  if (!form || form.dataset.wired) return;
+  form.dataset.wired = "1";
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = $("chatInput");
+    const q = (input && input.value || "").trim();
+    if (!q) return;
+    input.value = "";
+    sendQuestion(q);
+  });
+  appendChat(`<div class="bubble bot"><div class="who">委員會</div>可以問「NVDA 現在值不值得買」「該不該賣 AAPL」。會讀報價與新聞，再請十一席發言。非正規盤即使看多也不得成交。</div>`);
+})();
+
